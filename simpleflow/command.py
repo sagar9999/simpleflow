@@ -151,6 +151,9 @@ def transform_input(wf_input):
               type=comma_separated_list,
               required=False,
               help='Tags for the workflow execution.')
+@click.option('--lambda-role',
+              required=False,
+              help='Lambda role.')
 @click.option('--decision-tasks-timeout',
               required=False,
               help='Timeout for the decision tasks.')
@@ -175,6 +178,7 @@ def start_workflow(workflow,
                    task_list,
                    execution_timeout,
                    tags,
+                   lambda_role,
                    decision_tasks_timeout,
                    input,
                    input_file,
@@ -200,6 +204,7 @@ def start_workflow(workflow,
         execution_timeout=execution_timeout,
         input=wf_input,
         tag_list=tags,
+        lambda_role=lambda_role or workflow_class.lambda_role,
         decision_tasks_timeout=decision_tasks_timeout,
     )
     print('{workflow_id} {run_id}'.format(
@@ -456,6 +461,9 @@ def create_unique_task_list(workflow_id=''):
               type=comma_separated_list,
               required=False,
               help='Tags identifying the workflow execution.')
+@click.option('--lambda-role',
+              required=False,
+              help='Lambda role.')
 @click.option('--decision-tasks-timeout',
               required=False,
               help='Decision tasks timeout.')
@@ -490,6 +498,7 @@ def standalone(context,
                workflow_id,
                execution_timeout,
                tags,
+               lambda_role,
                decision_tasks_timeout,
                input,
                input_file,
@@ -579,6 +588,7 @@ def standalone(context,
         task_list,
         execution_timeout,
         tags,
+        lambda_role,
         decision_tasks_timeout,
         format.input(wf_input),
         None,
