@@ -342,7 +342,7 @@ class Executor(executor.Executor):
             future.set_finished(format.decode(event['result']))
         elif state == 'failed':
             future.set_exception(exceptions.TaskFailed(
-                name=event['name'],
+                name=event['id'],
                 reason=event['reason'],
                 details=event.get('details'),
             ))
@@ -385,7 +385,7 @@ class Executor(executor.Executor):
             future.set_finished(json_loads_or_raw(event['result']))
         elif state == 'failed':
             future.set_exception(exceptions.TaskFailed(
-                name=event['name'],
+                name=event['id'],
                 reason=event['reason'],
                 details=event.get('details'),
             ))
